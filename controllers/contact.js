@@ -19,6 +19,16 @@ exports.getContact = (req, res) => {
 };
 
 /**
+ * GET /contact
+ * Contact form page.
+ */
+exports.getAgora = (req, res) => {
+    res.render('agora', {
+        title: 'agora'
+    });
+};
+
+/**
  * POST /contact
  * Send a contact form via Nodemailer.
  */
