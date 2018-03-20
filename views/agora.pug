@@ -14,15 +14,15 @@ body
 
 block content
     .page-header
-        h3 AGORA API INTEGRATION
+        h1 AGORA API INTEGRATION
         style.
-            h3 {
+            h1 {
                 text-align: center;
                 color: deepskyblue;
             }
 
 
-}#div_device.panel.panel-default
+#div_device.panel.panel-default
     .select
         label(for='audioSource') Audio source:
         select#audioSource
@@ -41,8 +41,18 @@ block content
         button#leave.btn.btn-primary(onclick='leave()') Leave
         button#publish.btn.btn-primary(onclick='publish()') Publish
         button#unpublish.btn.btn-primary(onclick='unpublish()') Unpublish
+        style.
+            button {
+                margin-left: 15px;
+                color: blue;
+            }
+            input,select,label {
+                margin-left: 15px;
+            }
 
-}#video(style='margin:0 auto;')
+
+
+#video(style='margin:0 auto;')
     #agora_local(style='float:left;width:710px;height:547px;display:inline-block;')
 
 script(language='javascript').
@@ -80,7 +90,7 @@ script(language='javascript').
                     }
                     // The user has granted access to the camera and mic.
                     localStream.on("accessAllowed", function () {
-                        alert("Please enable the camera");
+                        alert("Click to enable camera");
                         console.log("accessAllowed");
                     });
                     // The user has denied access to the camera and mic.
@@ -153,7 +163,7 @@ script(language='javascript').
         client.leave(function () {
             //turn off camera
             //disableVideo();
-            stop();
+           // stop();
             console.log("Leave channel successfully");
         }, function (err) {
             console.log("Leave channel failed");
@@ -193,5 +203,3 @@ script(language='javascript').
     }
     getDevices();
 
-    //audioSelect.onchange = getDevices;
-   // videoSelect.onchange = getDevices;
