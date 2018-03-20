@@ -3,6 +3,7 @@
 head
     link(rel='stylesheet', href='css/main.css')
     script(src='js/lib/AgoraRTCSDK-2.1.0.js')
+    script(src='js/lib/CustomAgora.js')
     script(src='js/lib/jquery-3.1.1.min.js')
     script(src='js/lib/bootstrap.min.js')
 
@@ -14,7 +15,14 @@ body
 block content
     .page-header
         h3 AGORA API INTEGRATION
-#div_device.panel.panel-default
+        style.
+            h3 {
+                text-align: center;
+                color: deepskyblue;
+            }
+
+
+}#div_device.panel.panel-default
     .select
         label(for='audioSource') Audio source:
         select#audioSource
@@ -24,7 +32,7 @@ block content
 #div_join.panel.panel-default
     .panel-body
         | Key:
-        input#key(type='text', value='', size='36')
+        input#key(type='text', value='0792d722710e4a189212579c095677fb', size='36')
         | Channel:
         input#channel(type='text', value='1000', size='4')
         | Host:
@@ -33,38 +41,15 @@ block content
         button#leave.btn.btn-primary(onclick='leave()') Leave
         button#publish.btn.btn-primary(onclick='publish()') Publish
         button#unpublish.btn.btn-primary(onclick='unpublish()') Unpublish
-//
-  style>
-  .video__box{width:910px; margin:0 auto; overflow:hidden;}
-  .video__main{ width:810px; height:607px;float:left }
-  .video__list{ width:200px; height:607px; float:left;}
-  .video__item{ width:200px; height:174px; hei background:url(/img/icon_live.png) center center no-repeat; }
-  </style>
-  <div class="video__main">
-  </div>
-  <div class="video__list">
-  <div class="video__item"></div>
-  <div id="video" class="video__item">
-  <div id="agora_local"></div>
-  </div>
-  </div
-#video(style='margin:0 auto;')
-    #agora_local(style='float:right;width:210px;height:147px;display:inline-block;')
+
+}#video(style='margin:0 auto;')
+    #agora_local(style='float:left;width:710px;height:547px;display:inline-block;')
+
 script(language='javascript').
     if (!AgoraRTC.checkSystemRequirements()) {
         alert("browser is no support webRTC");
     }
-    /* select Log type */
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.NONE);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.ERROR);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.WARNING);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.INFO);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.DEBUG);
-    /* simulated data to proof setLogLevel() */
-    AgoraRTC.Logger.error('this is error');
-    AgoraRTC.Logger.warning('this is warning');
-    AgoraRTC.Logger.info('this is info');
-    AgoraRTC.Logger.debug('this is debug');
+
     var client, localStream, camera, microphone;
     var audioSelect = document.querySelector('select#audioSource');
     var videoSelect = document.querySelector('select#videoSource');
@@ -95,6 +80,7 @@ script(language='javascript').
                     }
                     // The user has granted access to the camera and mic.
                     localStream.on("accessAllowed", function () {
+                        alert("Please enable the camera");
                         console.log("accessAllowed");
                     });
                     // The user has denied access to the camera and mic.
@@ -165,7 +151,10 @@ script(language='javascript').
     function leave() {
         document.getElementById("leave").disabled = true;
         client.leave(function () {
-            console.log("Leavel channel successfully");
+            //turn off camera
+            //disableVideo();
+            stop();
+            console.log("Leave channel successfully");
         }, function (err) {
             console.log("Leave channel failed");
         });
@@ -202,6 +191,7 @@ script(language='javascript').
             }
         });
     }
-    //audioSelect.onchange = getDevices;
-    //videoSelect.onchange = getDevices;
     getDevices();
+
+    //audioSelect.onchange = getDevices;
+   // videoSelect.onchange = getDevices;
